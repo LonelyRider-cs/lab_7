@@ -1,0 +1,72 @@
+//- player-info.pug
+include ../partials/header.pug
+include ../partials/menu.pug
+
+div.container
+  br
+  div.row
+    div.col-4
+      div.card
+        //- TODO: Modify the pug code below to conditionally set the image_src
+        - let image_src = '../../resources/img/helmet.jpg'
+        - if(who)
+          - image_src = who.img_src
+
+      img.card-img-top#player_img(src= image_src, alt="Football Player")
+      div.card-body.mx-auto
+        form.form(action="/player_info/post", method="get")
+          select.custom-select(name="player", onchange="this.form.submit()")
+            option(selected) Select Player
+            //- TODO: Populate the select with player options. Set the value to the player's id and display the player's name.
+            for item in result_1
+              option(value=item.id)=item.name
+    div.col-8
+      div.table-responsive
+        table.table
+          //- TODO: Set the player's information. On select, fill in the player's information in each of the field below. You will need to calculate the average rushing, receiving, and passing yards.
+          - let year = '?'
+          - let major = '?'
+          - let games_played = '?'
+          - let passing_yards = '?'
+          - let avg_passing_yards = '?'
+          - let rushing_yards = '?'
+          - let avg_rushing_yards = '?'
+          - let receiving_yards = '?'
+          - let avg_receiving_yards = '?'
+          - if(who)
+              - year = who.year
+              - major = who.major
+              - games_played = gp
+              - passing_yards = who.passing_yards
+              - avg_passing_yards = who.passing_yards / gp
+              - rushing_yards = who.rushing_yards
+              - avg_rushing_yards = who.rushing_yards / gp
+              - receiving_yards = who.receiving_yards
+              - avg_receiving_yards = who.receiving_yards / gp
+
+          tr
+            th.text-center(colspan="2") Year
+            td.text-center(colspan="2")=year
+          tr
+            th.text-center(colspan="2") Major
+            td.text-center(colspan="2")=major
+          tr
+            th.text-center(colspan="2") Games Played
+            td.text-center(colspan="2")=games_played
+          tr
+            td Passing Yards:
+            td=passing_yards
+            td Avg. Passing Yards:
+            td=avg_passing_yards
+          tr
+            td Rushing Yards:
+            td=rushing_yards
+            td Avg. Rushing Yards:
+            td=avg_rushing_yards
+          tr
+            td Receiving Yards:
+            td=receiving_yards
+            td Avg. Receiving Yards:
+            td=avg_receiving_yards
+
+include ../partials/footer.pug
